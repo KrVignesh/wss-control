@@ -5,11 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="theme-color" content="#483d8b" />
     <title>Mobile Site</title>
 
-    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="/socket.io/socket.io.js"></script> -->
 
     <style>
         body {
@@ -17,6 +19,7 @@
             color: white;
             text-align: center;
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            user-select: none;
         }
 
         .btn {
@@ -49,19 +52,28 @@
 
 
     <script>
+        var socket = io({
+            transports: ['websocket'],
+            upgrade: false
+        });
+        window.addEventListener('deviceorientation', function (event) {
+            var values = [
+                event.beta,
+                event.gamma,
+                event.alpha
+            ];
+            setTimeout(function () {
+                socket.emit('orientation', values);
+            }, 500);
+
+            return false;
+        });
+
+
         $(".btn").on("click", function () {
             if ($(this).text() == "START") {
                 $(this).text("STOP");
-                var socket = io({transports: ['websocket'], upgrade: false});
-                window.addEventListener('deviceorientation', function (event) {
-                    var values = [
-                        event.beta,
-                        event.gamma,
-                        event.alpha
-                    ];
-                    socket.emit('orientation', values);
-                    return false;
-                });
+
             } else {
                 $(this).text("START");
             }
