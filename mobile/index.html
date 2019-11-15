@@ -53,10 +53,10 @@
 
 
     <script>
-        // var socket = io({
-        //     transports: ['websocket'],
-        //     upgrade: false
-        // });
+        var socket = io({
+            transports: ['websocket'],
+            upgrade: false
+        });
 
         $(".btn").on("click", function () {
             if ($(this).text() == "START") {
