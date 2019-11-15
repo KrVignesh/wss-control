@@ -13,12 +13,14 @@ app.get('/desktop/', function (req, res) {
     res.sendFile(__dirname + '/desktop/index.html');
 });
 
-http.listen(port, function () {
-    console.log('listening on *:' + port);
-});
 
 io.on('connection', function (socket) {
+    // console.log('a user connected');
     socket.on('orientation', function (data) {
         io.emit('orientation', data);
     });
+});
+
+http.listen(port, function () {
+    console.log('listening on *:' + port);
 });

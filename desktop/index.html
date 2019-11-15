@@ -9,9 +9,9 @@
     <title>Desktop Site</title>
 
     <!-- <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script> -->
     <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
 
     <script type="text/javascript" src="https://threejs.org/build/three.js"></script>
 
@@ -29,6 +29,10 @@
 
 <body>
     <script>
+         var socket = io({
+            transports: ['websocket'],
+            upgrade: false
+        });
         var scene = new THREE.Scene();
         scene.background = new THREE.Color(0x121212);
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -53,8 +57,6 @@
 
         var animate = function () {
             requestAnimationFrame(animate);
-            var socket = io();
-
             socket.on('orientation', function (data) {
                 // console.log(data[0]);
                 cube.rotation.x = data[0];
