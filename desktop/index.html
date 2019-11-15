@@ -60,8 +60,8 @@
             socket.on('orientation', function (data) {
                 // console.log(data[0]);
                 cube.rotation.x = data[0];
-                cube.rotation.y = data[1];
-                cube.rotation.z = data[2];
+                // cube.rotation.y = data[1];
+                // cube.rotation.z = data[2];
                 renderer.render(scene, camera);
             });
 

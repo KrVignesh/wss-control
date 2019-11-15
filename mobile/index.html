@@ -58,9 +58,9 @@
         });
         window.addEventListener('deviceorientation', function (event) {
             var values = [
-                event.beta,
-                event.gamma,
-                event.alpha
+                event.beta
+                // event.gamma,
+                // event.alpha
             ];
             setTimeout(function () {
                 socket.emit('orientation', values);
