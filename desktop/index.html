@@ -58,7 +58,7 @@
         var animate = function () {
             requestAnimationFrame(animate);
             socket.on('orientation', function (data) {
-                // console.log(data[0]);
+                console.log(data);
                 cube.rotation.x = data[0];
                 // cube.rotation.y = data[1];
                 // cube.rotation.z = data[2];

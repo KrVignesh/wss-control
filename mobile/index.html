@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="theme-color" content="#483d8b" />
+    <meta name="theme-color" content="#483d8b">
     <title>Mobile Site</title>
 
     <!-- <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
@@ -24,9 +24,10 @@
 
         .btn {
             position: absolute;
-            top: 50%;
+            top: 70%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 200px;
             padding: 20px 40px;
             font-size: 30px;
             background-color: transparent;
@@ -52,27 +53,30 @@
 
 
     <script>
-        var socket = io({
-            transports: ['websocket'],
-            upgrade: false
-        });
+        // var socket = io({
+        //     transports: ['websocket'],
+        //     upgrade: false
+        // });
 
         $(".btn").on("click", function () {
             if ($(this).text() == "START") {
+                $(this).css('box-shadow', '2px 2px rgba(255,0,0,0.5)');
                 $(this).text("STOP");
                 window.addEventListener('deviceorientation', function (event) {
-            var values = [
-                event.beta
-                // event.gamma,
-                // event.alpha
-            ];
-            socket.emit('orientation', values);
+                    var values = [
+                        event.beta
+                        // event.gamma,
+                        // event.alpha
+                    ];
+                    console.log(values);
+                    socket.emit('orientation', values);
 
-            return false;
-        });
+                    return false;
+                });
 
             } else {
                 $(this).text("START");
+                $(this).css('box-shadow', '2px 2px rgba(0,255,0,0.5');
             }
 
             return false;
