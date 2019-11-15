@@ -56,23 +56,20 @@
             transports: ['websocket'],
             upgrade: false
         });
-        window.addEventListener('deviceorientation', function (event) {
+
+        $(".btn").on("click", function () {
+            if ($(this).text() == "START") {
+                $(this).text("STOP");
+                window.addEventListener('deviceorientation', function (event) {
             var values = [
                 event.beta
                 // event.gamma,
                 // event.alpha
             ];
-            setTimeout(function () {
-                socket.emit('orientation', values);
-            }, 500);
+            socket.emit('orientation', values);
 
             return false;
         });
-
-
-        $(".btn").on("click", function () {
-            if ($(this).text() == "START") {
-                $(this).text("STOP");
 
             } else {
                 $(this).text("START");
