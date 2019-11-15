@@ -52,7 +52,7 @@
         $(".btn").on("click", function () {
             if ($(this).text() == "START") {
                 $(this).text("STOP");
-                var socket = io();
+                var socket = io({transports: ['websocket'], upgrade: false});
                 window.addEventListener('deviceorientation', function (event) {
                     var values = [
                         event.beta,
