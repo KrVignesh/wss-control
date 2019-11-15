@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+
+    <script>
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            window.location.href = "/mobile/";
+        } else {
+            window.location.href = "/desktop/";
+        }
+    </script>
+</head>
+
+<body>
+</body>
+</html>

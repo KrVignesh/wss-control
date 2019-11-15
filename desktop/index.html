@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Desktop Site</title>
+
+    <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script type="text/javascript" src="https://threejs.org/build/three.js"></script>
+
+    <style>
+        canvas {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x121212);
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        var renderer = new THREE.WebGLRenderer({
+            antialias: true
+        });
+        // Add support for retina displays
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+        var material = new THREE.MeshBasicMaterial({
+            color: 0x00ff00
+        });
+
+        var cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        var animate = function () {
+            requestAnimationFrame(animate);
+            var socket = io();
+
+            socket.on('orientation', function (data) {
+                // console.log(data[0]);
+                cube.rotation.x = data[0];
+                cube.rotation.y = data[1];
+                cube.rotation.z = data[2];
+                renderer.render(scene, camera);
+            });
+
+        };
+
+        animate();
+    </script>
+</body>
+
+</html>
