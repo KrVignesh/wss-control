@@ -24,7 +24,7 @@
 
         .btn {
             position: absolute;
-            top: 70%;
+            top: 65%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 200px;
@@ -44,12 +44,17 @@
         .btn:focus {
             outline: none;
         }
+
+        #resetBtn{
+            top: 80%;
+        }
     </style>
 
 </head>
 
 <body>
-    <button class="btn">START</button>
+    <button class="btn" id="actionBtn">START</button>
+    <button class="btn" id="resetBtn">Reset</button>
 
 
     <script>
@@ -58,17 +63,21 @@
             upgrade: false
         });
 
-        $(".btn").on("click", function () {
+        $("#resetBtn").on("click", function () {
+            socket.emit('status', 'reset');
+        });
+
+        $("#actionBtn").on("click", function () {
             if ($(this).text() == "START") {
                 $(this).css('box-shadow', '2px 2px rgba(255,0,0,0.5)');
                 $(this).text("STOP");
                 window.addEventListener('deviceorientation', function (event) {
-                    // var values = [
-                    //     event.beta
-                    //     // event.gamma,
-                    //     // event.alpha
-                    // ];
-                    socket.emit('orientation', event.beta);
+                    var values = [
+                        event.beta,
+                        event.gamma
+                        // event.alpha
+                    ];
+                    socket.emit('orientation', values);
 
 
                     return false;

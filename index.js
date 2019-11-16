@@ -17,7 +17,9 @@ app.get('/desktop/', function (req, res) {
 io.on('connection', function (socket) {
     socket.on('orientation', function (data) {
         io.emit('devOrientation', data);
-
+    });
+    socket.on('status', function (data) {
+        io.emit('devStatus', data);
     });
 });
 
