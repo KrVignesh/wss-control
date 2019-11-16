@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="theme-color" content="#483d8b"/>
+    <meta name="theme-color" content="#483d8b" />
     <title>Desktop Site</title>
 
     <!-- <script type="text/javascript" src="https://cdn.socket.io/socket.io-1.2.0.js"></script> -->
@@ -16,9 +16,10 @@
     <script type="text/javascript" src="https://threejs.org/build/three.js"></script>
 
     <style>
-        body{
+        body {
             user-select: none;
         }
+
         canvas {
             position: absolute;
             top: 0px;
@@ -29,10 +30,24 @@
 
 <body>
     <script>
-         var socket = io({
+        var xOrientation = 0;
+        $(document).ready(function () {
+            let previousValue;
+            socket.on('devOrientation', function (data) {
+                console.log(data);
+                if (previousValue !== data) {
+                    xOrientation = data * (Math.PI / 180);
+                }
+                previousValue = data
+            });
+        });
+
+
+        var socket = io({
             transports: ['websocket'],
             upgrade: false
         });
+
         var scene = new THREE.Scene();
         scene.background = new THREE.Color(0x121212);
         var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -57,14 +72,17 @@
 
         var animate = function () {
             requestAnimationFrame(animate);
-            socket.on('devOrientation', function (data) {
-                console.log(data);
-                cube.rotation.x = -data/300;
-                // cube.rotation.y = data[1];
-                // cube.rotation.z = data[2];
-                renderer.render(scene, camera);
-            });
 
+            cube.rotation.x = xOrientation;
+            // if (cube.rotation.x > 2 && xOrientation < 0) {
+            //     cube.rotation.x += xOrientation;
+            // }
+            // if (cube.rotation.x < -2 && xOrientation > 0) {
+            //     cube.rotation.x += xOrientation;
+            // }
+            // console.log(cube.rotation.x);
+
+            renderer.render(scene, camera);
         };
 
         animate();
