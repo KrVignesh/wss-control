@@ -57,9 +57,9 @@
 
         var animate = function () {
             requestAnimationFrame(animate);
-            socket.on('orientation', function (data) {
+            socket.on('devOrientation', function (data) {
                 console.log(data);
-                cube.rotation.x = data[0];
+                cube.rotation.x = -data/300;
                 // cube.rotation.y = data[1];
                 // cube.rotation.z = data[2];
                 renderer.render(scene, camera);

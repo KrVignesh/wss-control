@@ -15,10 +15,13 @@ app.get('/desktop/', function (req, res) {
 
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    // console.log('a user connected');
     socket.on('orientation', function (data) {
-        // console.log(data);
-        io.emit('orientation', data);
+        // setInterval(function(){
+            // console.log(data);
+            io.emit('devOrientation', data);
+        // }, 1000);
+
     });
 });
 
